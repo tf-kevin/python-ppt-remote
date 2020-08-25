@@ -1,4 +1,4 @@
-# This is a script to remote control PowerPoint presentations on Windows from your smartphone. 
+# This is a script to remote control PowerPoint presentations on macOS from your smartphone. 
 # Usage:
 #  * Run pptremoteserver.py on a server accessible from the internet
 #  * Run pptremoteagent.py on the computer where you have PowerPoint running
@@ -9,9 +9,8 @@
 #       pptremoteagent.py -s <serverip>:<serverport>
 #  * You will need to install the following Python 3 modules:
 #       On server: flask
-#       On agent: keyboard, pywin32, requests
+#       On agent: keyboard, requests
 
-from win32gui import GetWindowText, GetForegroundWindow
 import time, requests, sys, getopt, keyboard
 
 REQUESTS_CONNECT_TIMEOUT    = 5
@@ -21,7 +20,7 @@ COMMANDS = ['next', 'back', 'stop']
 
 def getcommand (p_server):
     try:
-        r = requests.get('http://' + p_server + '/command', timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT))
+        r = requests.get('http://' + p_server + '/command/', timeout=(REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT))
     except:
         print('WARNING: unable to access command server')
         return(None)
@@ -57,10 +56,8 @@ def main(argv):
             
     while (True):
         time.sleep(1)
-        wintext = GetWindowText(GetForegroundWindow())
-                
-        if wintext.startswith('PowerPoint Slide Show - ['):
-            cmd = getcommand (arg_server)
+        
+        cmd = getcommand (arg_server)
             if not cmd is None:
                 if   cmd == 'next':
                     keyboard.send('space')
@@ -68,6 +65,7 @@ def main(argv):
                     keyboard.send('backspace')
                 elif cmd == 'stop':
                     keyboard.send('escape')
-            
+                    
+       
 if __name__ == '__main__':
     main(sys.argv[1:])            
