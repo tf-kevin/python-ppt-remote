@@ -1,5 +1,5 @@
 # python-ppt-remote
-This is a script to remote control PowerPoint presentations on Windows from your smartphone. 
+This is a script to remote control PowerPoint presentations on macOS from your smartphone. 
 
 Usage:
  * Run pptremoteserver.py on a server accessible from the internet
@@ -11,4 +11,5 @@ Notes:
       `pptremoteagent.py -s <serverip>:<serverport>`
  * You will need to install the following Python 3 modules:
       On server: flask
-      On agent: keyboard, pywin32, requests
+      On agent: keyboard, requests
+ * This is a slightly simplified version from the original repo for macOS. 
